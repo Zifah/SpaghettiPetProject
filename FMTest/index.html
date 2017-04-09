@@ -1,0 +1,202 @@
+﻿File name:	index.html	Save
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Yoruba Tone Marker</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Angular Block UI -->
+    <link rel="stylesheet" href="js/plugins/bower_components/angular-block-ui/dist/angular-block-ui.min.css" />
+    <!-- Angular Toast -->
+    <link rel="stylesheet" href="js/plugins/bower_components/ngToast/dist/ngToast.min.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="YorubaIntonationApp" ng-cloak>
+    <toast></toast>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Yoruba Tone Marker</a>
+            </div>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href=""><i class="fa fa-fw fa-dashboard"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="recently-tone-marked.html"><i class="fa fa-fw fa-dashboard"></i>Recently Tone Marked</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <div id="page-wrapper" ng-controller="YorubaIntonationController">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <a href="" style="text-decoration: none !important" ng-click="reload()">Yoruba Intonation</a>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="">Yoruba Intonation tool</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-wrench"></i> Yoruba Intonation
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-repeat text-right" ng-click="restart()"></i>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable" data-ng-show="!hideAlert">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <p>
+                                <i class="fa fa-info-circle"></i>
+                                Add tone marks (Ami Ohun) to your Yoruba text online with no need for a special keyboard.
+                            </p>
+                            <br />
+                            <p>
+                                <h4>How to use this Yoruba tone marking tool</h4>
+                                <ul>
+                                    <li>Enter your Yoruba text, one paragraph at a time into the <b>INPUT</b> textbox below.
+                                    <li>Click <b>Process</b>. Your Yoruba text will be broken down into words and each word will be broken down into its consituent syllables.</li>
+                                    <li>Tone mark your paragraph one syllable at a time by choosing the syllable option with the correct mark</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row" ng-show="completed" id="divCopyResult">
+                    <div class="col-lg-12 text-left">
+                        <h4>Return to edit mode&nbsp;<i title="I need to adjust the intonation" class="fa fa-repeat text-success" ng-click="restart()"></i></h4><div class="alert alert-info">
+                            <div class="panel panel-default">
+                                <div class="panel-body text-success">
+                                    <h1>{{finalParagraph}}</h1>
+                                </div>
+                                <div class="panel-body text-right">
+                                    <button ng-click-copy="{{finalParagraph}}" class="btn btn-success">Click Here to <b>Copy</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row" ng-show="editing">
+                    <div class="col-lg-8 text-left">
+                        <div class="panel panel-default" id="divInput">
+                            <div class="panel-body">
+                                <div class="form">
+                                    <div class="form-group">
+                                        <label>INPUT</label>
+                                        <textarea class="form-control" rows="3" ng-model="paragraph"></textarea>
+                                    </div>
+                                    <button type="reset" class="btn btn-primary" ng-click="processParagraph(); hideAlert = true;">Process</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default" id="divProcessed" ng-show="words">
+                            <div class="panel-body">
+                                <h4 ng-show="false">RESULT</h4>
+                                <button type="button" class="btn btn-primary btn-lg" ng-class="$index == currentWordIndex ? 'btn-warning' : 'btn-primary'" style="margin: 4px 4px 4px 4px"
+                                        ng-repeat="wordForm in finalForm track by $index" ng-click="setIndex($index)">
+                                    <b ng-repeat="syllable in wordForm track by $index">{{syllable}}</b>
+                                </button>
+                                <hr />
+                                <button type="button" class="btn btn-xs btn-success" style="margin: 4px 4px 4px 4px" ng-click="finish()" ng-show="finalForm.length > 0">Finish</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" id="divIntonator" ng-show="words">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="panel panel-default alert alert-warning" id="divCurrentWord">
+                                    <div class="panel-body text-center">
+                                        <button type="button" ng-click="setSyllableIndex($index)" class="btn" ng-class="$index == syllableIndex ? 'btn-warning' : 'btn-default'"
+                                                style="margin:4px 4px 4px 4px" ng-repeat="s in syllables[words[currentWordIndex]] track by $index">
+                                            <b>{{s}}</b>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-lg-3">
+                                    </div>
+                                    <div class="panel panel-default col-lg-6">
+                                        <div class="panel-body">
+                                            <div class="row" ng-repeat="f in syllableForms[syllables[words[currentWordIndex]][syllableIndex]]">
+                                                <button ng-click="setPreferredForm(f)" type="button" class="btn btn-default btn-lg" style="margin-bottom:4px"><b>{{f}}</b></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                    </div>
+                                </div>
+                                <div class="panel panel-default text-center">
+                                    <div class="panel-body">
+                                        <button type="button" class="btn btn-default btn-lg" style="margin:4px 4px 4px 4px">
+                                            <b ng-repeat="wordForm in finalForm[currentWordIndex] track by $index">{{wordForm}}</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <div id="footer">
+                <div class="panel panel-default text-center">
+                    <div class="panel-body">
+                        This Yoruba tone marker was built with love by <a href="http://www.hafiz.com.ng/2017/02/the-yoruba-tone-marking-web-application.html" target="_blank">Hafiz Adewuyi</a>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Angular JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="js/plugins/bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
+    <script src="js/plugins/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="js/plugins/bower_components/ngToast/dist/ngToast.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/JustMaier/6ef7788709d675bd8230/raw/3d39d50e66d8d77e05656ed7dd09298be7e86f1f/ngClickCopy.js"></script>
+    <script type="text/javascript" src="js/plugins/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
