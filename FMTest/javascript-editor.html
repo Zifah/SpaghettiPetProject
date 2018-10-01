@@ -66,7 +66,7 @@
                             </li>
                         </ol>
                     </div>
-                </div>                
+                </div>
                 <!-- /.row -->
                 <div class="row" ng-show="outputArray">
                     <div class="col-lg-12">
@@ -75,7 +75,7 @@
                                 <div class="form">
                                     <div class="form-group">
                                         <label>RESULT</label>
-                                        <textarea class="form-control" rows="10">{{outputArray | json }}</textarea>
+                                        <textarea ng-model="outputArrayText" class="form-control" rows="10"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -140,13 +140,17 @@
                                     <table id="tblRecentlyProcessed" class="table table-bordered table-hover table-striped">
                                         <thead>
                                             <tr>
-                                                <th ng-repeat="property in arrayProps" ng-click="root.editing = null" ng-if="hiddenProps.indexOf(property) == -1">{{property}}</th>
+                                                <th ng-repeat="property in arrayProps" ng-click="root.editing = null" ng-if="hiddenProps.indexOf(property) == -1">
+                                                    <span>
+                                                        {{property}}
+                                                    </span>
+                                                </th>
                                                 <th><button class="btn btn-success" ng-click="finish()">Finish</button></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="row in array" ng-init="rowIndex = $index">
-                                                <td ng-repeat="property in arrayProps" ng-init="cell = rowIndex +''+ $index" ng-if="hiddenProps.indexOf(property) == -1" 
+                                                <td ng-repeat="property in arrayProps" ng-init="cell = rowIndex +''+ $index" ng-if="hiddenProps.indexOf(property) == -1"
                                                     ng-style="deletedRows.indexOf(rowIndex) != -1 ? { 'text-decoration' : 'line-through' } : { }">
                                                     <span ng-click="root.editing = cell" ng-show="root.editing != cell" event-focus-id="cell{{cell}}" event-focus="click">{{row[property]||'Empty'}}</span>
                                                     <span>

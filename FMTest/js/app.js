@@ -219,7 +219,7 @@
             $scope.arrayProps = [];
 
             for (var i = 0; i < $scope.array.length; i++) {
-                var member = $scope.array[0];
+                var member = $scope.array[i];
                 for (property in member) {
                     if (member.hasOwnProperty(property) && $scope.arrayProps.indexOf(property) == -1) {
                         $scope.arrayProps.push(property);
@@ -262,22 +262,26 @@
 
         function finish() {
             // Retrieve the array
-            $scope.outputArray = angular.copy($scope.array);
+            $scope.outputArray = []; //= angular.copy($scope.array);
 
             // Remove all deletedRows
-            for (var item in $scope.deletedRows) {
-                $scope.outputArray.splice($scope.deletedRows[item], 1);
+            var index = 0;
+            for (var item in $scope.array) {
+                if($scope.deletedRows.indexOf(index) == -1)
+                    $scope.outputArray.push(angular.copy($scope.array[index]));
+                index++;
             }
 
             // Remove instance of hidden props in each object of array
             $scope.outputArray.forEach(function (v) {
                 $scope.hiddenProps.forEach(function (w) {
-                    if (v[w])
+                    if (v.hasOwnProperty(w))
                         delete v[w];
                 });
             });
             
             $scope.finished = true;
+            $scope.outputArrayText = JSON.stringify($scope.outputArray, undefined, 4);
             $window.location.href = "#page-wrapper";
         }
     })
@@ -306,5 +310,22 @@
             scope.$on('$destroy', function () {
                 elem.off(attr.eventFocus);
             });
+        };
+    })
+    .directive('jsonText', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModel) {
+                function into(input) {
+                    return JSON.parse(input);
+                }
+                function out(data) {
+                    return JSON.stringify(data);
+                }
+                ngModel.$parsers.push(into);
+                ngModel.$formatters.push(out);
+
+            }
         };
     });
