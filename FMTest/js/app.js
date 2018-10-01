@@ -193,7 +193,7 @@
         }
 
         function getRecentlyProcessed() {
-            return $http.get('api/yoruba/paragraph/derivatives');
+            return $http.get('/api/yoruba/paragraph/derivatives');
         }
 
         return service;
