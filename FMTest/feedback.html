@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Yoruba Tone Marker</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Angular Block UI -->
+    <link rel="stylesheet" href="js/plugins/bower_components/angular-block-ui/dist/angular-block-ui.min.css" />
+    <!-- Angular Toast -->
+    <link rel="stylesheet" href="js/plugins/bower_components/ngToast/dist/ngToast.min.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="YorubaIntonationApp" ng-cloak>
+    <toast></toast>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Yoruba Tone Marker</a>
+            </div>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href=""><i class="fa fa-fw fa-dashboard"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="/feedback.html"><i class="fa fa-fw fa-envelope"></i>Contact Me (Feedback)</a>
+                    </li>
+                    <li ng-show="false">
+                        <a href="recently-tone-marked.html"><i class="fa fa-fw fa-dashboard"></i>Recently Tone Marked</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <div id="page-wrapper" ng-controller="YorubaFeedbackController">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <a href="" style="text-decoration: none !important" ng-click="reload()">Yoruba Intonation</a>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="">Yoruba Intonation tool</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-wrench"></i> Yoruba Intonation
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>
+                            <a href="mailto:hoadewuyi@gmail.com" class="btn btn-default" title="Send me a direct message"><i class="fa fa-envelope"></i></a>
+                        </p>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-8 text-left">
+                        <div class="panel panel-default" id="divInput">
+                            <div class="panel-body">
+                                <form class="form" name="feedbackForm">
+                                    <div class="form-group">
+                                        <label>Name *</label>
+                                        <input type="text" class="form-control" required ng-model="feedback.name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>E-mail <small>(if you want to hear back from me)</small></label>
+                                        <input type="email" class="form-control" ng-model="feedback.email" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Message *</label>
+                                        <textarea rows="3" class="form-control" ng-model="feedback.message" required></textarea>
+                                    </div>
+                                    <button ng-disabled="feedbackForm.$invalid" type="button" class="btn btn-primary" ng-click="submitFeedback();">Send <i class="fa fa-envelope"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <div id="footer">
+                <div class="panel panel-default text-center">
+                    <div class="panel-body">
+                        This Yoruba tone marker was built with love by <a href="http://www.hafiz.com.ng/2017/02/the-yoruba-tone-marking-web-application.html" target="_blank">Hafiz Adewuyi</a>
+                        <a href="mailto:hoadewuyi@gmail.com" title="Send me a direct message"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Angular JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="js/plugins/bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
+    <script src="js/plugins/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="js/plugins/bower_components/ngToast/dist/ngToast.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/JustMaier/6ef7788709d675bd8230/raw/3d39d50e66d8d77e05656ed7dd09298be7e86f1f/ngClickCopy.js"></script>
+    <script type="text/javascript" src="js/plugins/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
