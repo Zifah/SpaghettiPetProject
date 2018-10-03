@@ -1,6 +1,6 @@
 ﻿angular
     .module('YorubaIntonationApp')
-    .controller('YorubaIntonationController', function ($scope, YorubaIntonationService, $window, ngToast, ModalService) {
+    .controller('YorubaIntonationController', function ($scope, YorubaIntonationService, $window, ngToast) {
         activate();
 
         function activate() {
@@ -140,22 +140,6 @@
                 content: "The tone marked Yoruba text is now on your clipboard. <strong>Jọ̀ọ́ ṣá mi látẹ̀wọ́ọ́!</strong>",
                 className: 'info',
                 timeout: '5000'
-            });
-
-            ModalService.showModal({
-                template: "<div>Fry lives in {{futurama.city}}</div>",
-                controller: function (close) {
-                    this.city = "New New York";
-                },
-                controllerAs: "futurama"
-            }).then(function (modal) {
-                // The modal object has the element built, if this is a bootstrap modal
-                // you can call 'modal' to show it, if it's a custom modal just show or hide
-                // it as you need to.
-                modal.element.modal();
-                modal.close.then(function (result) {
-                    $scope.message = result ? "You said Yes" : "You said No";
-                });
             });
         }
     });
