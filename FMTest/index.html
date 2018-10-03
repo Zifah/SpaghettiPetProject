@@ -106,7 +106,7 @@
                                     <h1>{{finalParagraph}}</h1>
                                 </div>
                                 <div class="panel-body text-right">
-                                    <button ng-click-copy="{{finalParagraph}}" class="btn btn-success">Click Here to <b>Copy</b></button>
+                                    <button ng-click-copy="{{finalParagraph}}" ng-click="notifyTextCopied()" class="btn btn-success">Click Here to <b>Copy</b></button>
                                 </div>
                             </div>
                         </div>
@@ -200,5 +200,6 @@
     <script type="text/javascript" src="js/plugins/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
     <script src="js/app.js"></script>
     <script src="/js/controllers/yoruba-intonation-controller.js"></script>
+    <script src="/js/services/yoruba-intonation-service.js"></script>
 </body>
 </html>
