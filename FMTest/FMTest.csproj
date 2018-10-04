@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FMTest</RootNamespace>
     <AssemblyName>FMTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -22,6 +22,8 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>2bd4230c</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,8 +44,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp, Version=106.4.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.4.2\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net45\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
@@ -65,15 +71,12 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -115,6 +118,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -182,18 +186,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Business\EmailUtility.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
+    <Compile Include="Controllers\YorubaFeedbackController.cs" />
     <Compile Include="Controllers\YorubaController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Models\AppointmentDto.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\ToneMarkingLog.cs" />
     <Compile Include="Models\Paragraph.cs" />
     <Compile Include="Models\ParagraphOutput.cs" />
-    <Compile Include="System\AppointmentSystem.cs" />
-    <Compile Include="System\PatientSystem.cs" />
+    <Compile Include="Business\AppointmentSystem.cs" />
+    <Compile Include="Business\PatientSystem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,11 +212,12 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="System\AccountSystem.cs" />
-    <Compile Include="System\CustomerSystem.cs" />
-    <Compile Include="System\DataSystem.cs" />
-    <Compile Include="System\OrmSystem.cs" />
-    <Compile Include="System\YorubaSystem.cs" />
+    <Compile Include="Business\AccountSystem.cs" />
+    <Compile Include="Business\CustomerSystem.cs" />
+    <Compile Include="Business\DataSystem.cs" />
+    <Compile Include="Business\OrmSystem.cs" />
+    <Compile Include="Business\YorubaFeedbackService.cs" />
+    <Compile Include="Business\YorubaSystem.cs" />
     <Compile Include="Utilities\YorubaHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,15 +233,22 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="feedback.html" />
     <Content Include="index.html" />
     <Content Include="js\app.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\controllers\yoruba-feedback-controller.js" />
+    <Content Include="js\controllers\yoruba-intonation-controller.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.css" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.js" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.min.css" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.min.js" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\dst\angular-modal-service.js" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\dst\angular-modal-service.min.js" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\karma.config.js" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\webpack.config.js" />
     <Content Include="js\plugins\bower_components\angular-sanitize\angular-sanitize.js" />
     <Content Include="js\plugins\bower_components\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="js\plugins\bower_components\angular-sanitize\index.js" />
@@ -258,7 +273,9 @@
     <Content Include="js\plugins\morris\morris.min.js" />
     <Content Include="js\plugins\morris\raphael.min.js" />
     <Content Include="javascript-editor.html" />
-    <Content Include="recently-tone-marked.html" />
+    <Content Include="fipamọ́\recently-tone-marked.html" />
+    <Content Include="js\services\yoruba-feedback-service.js" />
+    <Content Include="js\services\yoruba-intonation-service.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="js\plugins\.bowerrc" />
@@ -316,6 +333,12 @@
     <Content Include="js\plugins\bower_components\ngToast\.bower.json" />
     <Content Include="js\plugins\bower_components\ngToast\bower.json" />
     <Content Include="js\plugins\bower_components\ngToast\README.md" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\.bower.json" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\bower.json" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\dst\angular-modal-service.js.map" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\dst\angular-modal-service.min.js.map" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\LICENSE" />
+    <Content Include="js\plugins\bower_components\angular-modal-service\README.md" />
     <None Include="Properties\PublishProfiles\YorubaIntonation.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
