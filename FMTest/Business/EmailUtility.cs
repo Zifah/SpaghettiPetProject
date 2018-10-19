@@ -17,10 +17,10 @@ namespace FMTest.Business
 
             var request = new RestRequest("messages", Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("from", $"{senderName} <{senderEmail ?? "yorubatonemarker@hafiz.com.ng"}>");
+            request.AddParameter("from", $"{senderName} <{senderEmail}>");
             request.AddParameter("to",receiverEmail);
             request.AddParameter("subject", subject);
-            request.AddParameter("text", body);
+            request.AddParameter("html", body);
             IRestResponse response = client.Execute(request);
             string responseBody = response.Content;
         }
