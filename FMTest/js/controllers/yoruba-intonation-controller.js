@@ -10,7 +10,7 @@
 
         $scope.processParagraph = processParagraph;
         $scope.setIndex = setIndex;
-        $scope.setSyllableIndex = setSyllableIndex;
+        $scope.setCurrentSyllable = setCurrentSyllable;
         $scope.setPreferredForm = setPreferredForm;
         $scope.finish = finish;
         $scope.reload = reload;
@@ -76,14 +76,30 @@
 
         function setIndex(index) {
             $scope.currentWordIndex = index;
-            $scope.setSyllableIndex(0);
+            $scope.setCurrentSyllable(0);
         }
 
-        function setSyllableIndex(index) {
+        function setCurrentSyllable(index) {
             $scope.syllableIndex = index;
-            var newSyllableForms = $scope.syllableForms[$scope.syllables[$scope.words[$scope.currentWordIndex]][index]];
-            if (newSyllableForms.length == 1) {
+            $scope.currentSyllable = $scope.syllables[$scope.words[$scope.currentWordIndex]][index];
+            $scope.currentSyllableForms = $scope.syllableForms[$scope.currentSyllable];
+
+            if ($scope.currentSyllableForms.length === 1) {
                 setPreferredForm(newSyllableForms[0]);
+            }
+
+            setSyllableFormLabels();
+        }
+
+        function setSyllableFormLabels() {
+            $scope.emboldenEvenLabels = false;
+            if ($scope.currentSyllableForms.length === 3) {
+                $scope.syllableFormLabels = ["do", "re", "mi"];
+            } else if ($scope.currentSyllableForms.length === 6) {
+                $scope.syllableFormLabels = ["do", "DO", "re", "RE", "mi", "MI"];
+                $scope.emboldenEvenLabels = true;
+            } else {
+                $scope.syllableFormLabels = [];
             }
         }
 
@@ -94,8 +110,8 @@
 
             $scope.finalForm[$scope.currentWordIndex][$scope.syllableIndex] = form;
 
-            if ($scope.syllableIndex == syllableLength - 1) {
-                if ($scope.currentWordIndex == wordsLength - 1) {
+            if ($scope.syllableIndex === syllableLength - 1) {
+                if ($scope.currentWordIndex === wordsLength - 1) {
                     finish();
                 }
 
@@ -105,7 +121,7 @@
             }
 
             else {
-                $scope.setSyllableIndex($scope.syllableIndex + 1);
+                $scope.setCurrentSyllable($scope.syllableIndex + 1);
             }
         }
 
