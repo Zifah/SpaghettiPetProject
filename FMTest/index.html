@@ -154,7 +154,9 @@
                                     </div>
                                     <div class="panel panel-default col-lg-6">
                                         <div class="panel-body">
-                                            <div class="row" ng-repeat="f in syllableForms[syllables[words[currentWordIndex]][syllableIndex]]">
+                                            <div class="row" ng-repeat="f in currentSyllableForms" ng-init="strong = ($index % 2) == 1 && emboldenEvenLabels">
+                                                <span ng-if="!strong">{{ syllableFormLabels[$index] }}</span>
+                                                <strong ng-if="strong">{{ syllableFormLabels[$index] }}</strong>
                                                 <button ng-click="setPreferredForm(f)" type="button" class="btn btn-default btn-lg" style="margin-bottom:4px"><b>{{f}}</b></button>
                                             </div>
                                         </div>
