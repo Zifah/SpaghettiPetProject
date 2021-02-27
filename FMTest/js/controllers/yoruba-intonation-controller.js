@@ -110,21 +110,63 @@
 
             $scope.finalForm[$scope.currentWordIndex][$scope.syllableIndex] = form;
 
-            if ($scope.syllableIndex === syllableLength - 1) {
-                if ($scope.currentWordIndex === wordsLength - 1) {
-                    finish();
-                }
-
-                else {
-                    $scope.setIndex($scope.currentWordIndex + 1);
-                }
+            var isCurrentWordCompleted = $scope.syllableIndex === syllableLength - 1;
+            if (isCurrentWordCompleted) {
+                doWordFinishedAction();
             }
 
             else {
+                // Move to the next syllable of the current word
                 $scope.setCurrentSyllable($scope.syllableIndex + 1);
             }
         }
 
+        /*
+         * When a word has been tone marked, do we want to:
+         * 1. Jump to the next word in the paragraph or 
+         * 2. Conclude tonemarking, since the current word is the last word in the paragraph
+         */
+        function doWordFinishedAction() {
+            var isCurrentWordTheLast = $scope.currentWordIndex === $scope.words.length - 1;
+            if (isCurrentWordTheLast) {
+                finish();
+            }
+
+            else {
+                // Move to the next word of the paragraph
+                $scope.setIndex($scope.currentWordIndex + 1);
+                /*
+                 * 1. Get the current word
+                 * 2. Check if it exists previously in the array of words
+                 * 3. If it doesn't, continue
+                 * 4. Otherwise go into another method (Choose previous form)
+                 * 
+                 */
+            }
+        }
+
+
+        function showPreviousForms() {
+            // Important. How to deal with different cases?
+
+            /*
+             * 1. Display all previous forms of the word on a pop-up
+             * 2. If the user chooses one, write over the final form entry of the current word with the final form entry of the chosen one, then either move to the next word or finish
+             * 3. Give the user an option to close the pop-up as well
+             * 4. 
+             */
+        }
+
+        /*
+         * Write marked form of previous word form on current word and call doWordFinishedAction()
+         */
+        function choosePreviousForm() {
+
+        }
+
+        /*
+         * Concatenate all the tone marked parts of the paragraph and display
+         */
         function finish() {
             var finalWords = [];
             for (var i = 0; i < $scope.finalForm.length; i++) {
