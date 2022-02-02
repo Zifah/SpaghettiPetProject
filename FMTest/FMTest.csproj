@@ -241,6 +241,7 @@
     <Content Include="js\controllers\yoruba-feedback-controller.js" />
     <Content Include="js\controllers\yoruba-intonation-controller.js" />
     <Content Include="js\jquery.js" />
+    <Content Include="js\ngClickCopy.js" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.css" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.js" />
     <Content Include="js\plugins\bower_components\angular-block-ui\dist\angular-block-ui.min.css" />
